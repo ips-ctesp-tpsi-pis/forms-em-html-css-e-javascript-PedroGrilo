@@ -1,188 +1,72 @@
 <!DOCTYPE html>
 <html>
-<style>
 
-label {
-  font-family: "Trebuchet MS", Verdana, Halvetica, Arial;
-  font-size: 15px;
-  color: #040507;
-  display: block;
-}
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css" >
 
-input[type=text], select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
+</head>
+<script src="validate.js"></script>
 
-input[type=submit] {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 
-input[type=submit]:hover {
-  background-color: #45a049;
-}
+<body onload="callSecurityAPI()"><br>
+	<center><h2>Uso de CSS para formatar estilos num Form HTML</h3></center>''
+	<div class="container">
+		<form onsubmit="return validateForm();" method="post"> <!-- action="/action_page.php" -->
+			<label for="name">Nome</label>
+			<input type="text" id="name" name="username" placeholder="Seu nome..." required><br>
 
-input[type=reset] {
-  background-color: #FF0000;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+			<label for="bday">Data de Nascimento</label>
+			<input type="date" id="bday" name="userbday" required /><br>
 
-input[type=reset]:hover {
-  background-color: #cc0000;
-}
+			<label for="nif">NIF</label>
+			<input type="text" id="nif" name="usernif" placeholder="Seu NIF..." required><br>
 
-input[type=button] {
-  background-color: #668cff;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+			<label for="cc">CC</label>
+			<input type="text" id="cc" name="usercc" placeholder="Seu CC..."><br>
 
-input[type=button]:hover {
-  background-color: #0040ff;
-}
+			<label for="address">Morada</label>
+			<input type="text" id="address" name="useraddress" placeholder="Sua morada..."><br>
 
-div {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
-</style>
-<script>
-	function validateForm() {
-	// colocar aqui todas as validações
-	// devolve false se falhar alguma regra, true caso contrário
-	// utilizar a variável formFeedback para indicar os erros
-		console.log("sadfsad");
-		var cc=document.getElementById("cc").value;
-		if (isNaN(cc) || cc.length < 8 || cc.length > 8) {
-			document.getElementById("formFeedback").style.color = "red";
-			document.getElementById("formFeedback").innerHTML = "Erro: número de CC inválido!";
-			//Vamos ajudar o utilizador indicando qual o campo errado
-			document.getElementById("cc").focus();
-			
-			return false;
-		}
-		else {
-			
-			// colocar aqui o alert com todos os dados inseridos e validados
-			document.getElementById("formFeedback").style.color = "green";
-			document.getElementById("formFeedback").innerHTML = "Ok!";
-		}
-		return false;
-		//return true;
+			<label for="cp">C&oacute;digo Postal</label>
+			<input type="text" id="cp" name="usercp" placeholder="Seu c&oacute;digo postal..." onkeypress="updateCord();"><br>
+
+			<label for="city">Cidade</label>
+			<input type="text" id="city" name="usercity" placeholder="Sua cidade..."><br>
+
+			<label for="latitude">Latitute</label>
+			<input type="text" disabled id="latitude" name="userlatitude"><br>
+
+			<label for="latitude">Longitude</label>
+			<input type="text" disabled id="longitude" name="userlongitude"><br>
+
+			<label for="email">Email</label>
+			<input type="email" id="email" name="useremail" placeholder="Seu email..." required
+				><br>
+
+			<label for="mobile">Telemóvel</label>
+			<input type="text" id="mobile" name="usermobile" placeholder="Seu telemóvel..."><br>
+			<div class="row">
+				<div class="col-*">
+					<input type="submit" value="Submit">
+				</div>
+				<div class="col-*">
+					<input type="reset" value="Clear">
+				</div>
+				<div class="col-*">
+					<input type="button"value="Pensamento do dia" onclick="callThinkingAPI()">
+				</div>
+			</div>
 		
-		
-		
-	}
-	
-	function callSecurityAPI() {
-		// Em primeiro lugar, vamos obter o IP da nossa máquina
-		var xhttp = new XMLHttpRequest();
-		var ipClient ="";
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-             //alert(this.responseText);
-			 //var myArr = JSON.parse(this.responseText);
-			 //document.getElementById("securityinfo").innerHTML = "Segurança: " + this.responseText;
-			 ipClient=this.responseText;
-			}
-		};
-		xhttp.open("GET", "https://api.ipify.org", true);
-		xhttp.send();
-		
-		// Vamos de seguida obter informações sobre o nosso IP chamando outra API
-		var xhttp2 = new XMLHttpRequest();
-		xhttp2.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-             //alert(this.responseText);
-			 //var myArr = JSON.parse(this.responseText);
-			 document.getElementById("securityinfo").innerHTML = "Dados deste computador: " + this.responseText;
-			}
-		};
-		var urlToCall ="https://ipapi.co/" + ipClient + "/json/";
-		xhttp2.open("GET", urlToCall, true);
-		xhttp2.send();
-	}
-
-	function callThinkingAPI() {
-		//document.getElementById("pensamento").innerHTML = "Thinking!";
-		var xhttp = new XMLHttpRequest();
-		xhttp.onreadystatechange = function() {
-			if (this.readyState == 4 && this.status == 200) {
-             
-			 var myArr = JSON.parse(this.responseText);
-			 // Estamos a ir buscar o campo activity do objecto JSON
-			 document.getElementById("pensamento").innerHTML = "Pensamento do dia: " + myArr.activity;
-			}
-		};
-		xhttp.open("GET", "https://www.boredapi.com/api/activity?type=recreational", true);
-		xhttp.send();
-	}
-	
-</script>
-<body onload="callSecurityAPI()">
-
-<h3>Uso de CSS para formatar estilos num Form HTML</h3>
-
-<div>
-  <form action="/action_page.php" onsubmit="return validateForm()" method="post">
-    <label for="name">Nome</label>
-    <input type="text" id="name" name="username" placeholder="Seu nome..." required oninvalid="this.setCustomValidity('Preencha o campo...')" ><br>
-
-    <label for="bday">Data de Nascimento</label>
-    <input type="date" id="bday" name="userbday" required oninvalid="this.setCustomValidity('Preencha o campo...')" /><br><br>
-
-    <label for="nif">NIF</label>
-    <input type="text" id="nif" name="usernif" placeholder="Seu NIF..." required oninvalid="this.setCustomValidity('Preencha o campo...')" ><br>
-	
-	<label for="cc">CC</label>
-    <input type="text" id="cc" name="usercc" placeholder="Seu CC..."><br>
-	
-	<label for="address">Morada</label>
-    <input type="text" id="address" name="useraddress" placeholder="Sua morada..."><br>
-	
-	<label for="cp">C&oacute;digo Postal</label>
-    <input type="text" id="cp" name="usercp" placeholder="Seu c&oacute;digo postal..."><br>
-	
-	<label for="city">Cidade</label>
-    <input type="text" id="city" name="usercity" placeholder="Sua cidade..."><br>
-	
-	<label for="latitude">Latitute</label>
-    <input type="text" id="latitude" name="userlatitude"><br>
-	
-	<label for="latitude">Longitude</label>
-    <input type="text" id="longitude" name="userlongitude"><br>
-	
-	<label for="email">Email</label>
-    <input type="email" id="email" name="useremail" placeholder="Seu email..." required  oninvalid="this.setCustomValidity('Preencha o campo...')" ><br>
-	
-	<label for="mobile">Telemóvel</label>
-    <input type="text" id="mobile" name="usermobile" placeholder="Seu telemóvel..."><br>
-  
-    <input type="submit" value="Submit"><input type="reset" value="Clear"><input type="button" value="Pensamento do dia" onclick="callThinkingAPI()"> 
-	<p id="formFeedback"></p>
-	<label id="pensamento"></label>
-  </form>
-  <br /><B>Informações de segurança</B>
-  <p id=securityinfo></p>
-</div>
+			<p id="formFeedback"></p>
+			<label id="pensamento"></label>
+		</form>
+		<br/><B>Informações de segurança:</B>
+		<p id=securityinfo></p>
+	</div>
 
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </html>
